@@ -1,0 +1,83 @@
+name: rocminfo
+license: NCSA
+version: 6.3.2
+summary: ROCm Application for Reporting System Info
+description: |
+  NOTE: This is a wrapper of the official package, but it is not verified,
+  affiliated with, or supported by AMD.
+
+  Radeon Open Compute (ROCm) Runtime rocminfo tool
+
+website: https://github.com/ROCm/rocminfo
+contact: https://github.com/pedro-avalos/rocminfo-snap/issues
+issues: https://github.com/pedro-avalos/rocminfo-snap/issues
+source-code: https://github.com/ROCm/rocminfo
+
+base: core24
+grade: stable
+confinement: strict
+compression: lzo
+
+platforms:
+  amd64:
+
+apps:
+  rocminfo:
+    command: opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/bin/rocminfo
+    environment:
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/lib
+      PATH: $PATH:$SNAP/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/bin
+    extensions: [gnome]
+    plugs:
+      - kernel-module-observe
+      - network
+
+  rocm-agent-enumerator:
+    command: opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/bin/rocm_agent_enumerator
+    environment:
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/lib
+      PATH: $PATH:$SNAP/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/bin
+    extensions: [gnome]
+    plugs:
+      - kernel-module-observe
+
+package-repositories:
+  - type: apt
+    architectures: [amd64]
+    components: [main]
+    suites: [noble]
+    key-id: CA8BB4727A47B4D09B4EE8969386B48A1A693C5C
+    url: https://repo.radeon.com/amdgpu/latest/ubuntu
+  - type: apt
+    architectures: [amd64]
+    components: [main]
+    suites: [noble]
+    key-id: CA8BB4727A47B4D09B4EE8969386B48A1A693C5C
+    url: https://repo.radeon.com/rocm/apt/latest
+    priority: 600
+
+parts:
+  rocminfo:
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_PREFIX_PATH=/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}
+      - -DCMAKE_INSTALL_PREFIX=/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}
+      - -DCPACK_PACKAGING_INSTALL_PREFIX=/opt/rocm-${SNAPCRAFT_PROJECT_VERSION}
+    source: https://github.com/ROCm/rocminfo.git
+    source-type: git
+    source-tag: rocm-${SNAPCRAFT_PROJECT_VERSION}
+    build-snaps: [cmake]
+    build-packages:
+      - rocm-dev
+    stage-packages:
+      - glib-networking
+      - hsa-rocr
+      - kmod
+      - libproxy1v5
+      - pciutils
+      - python3
+      - rocprofiler-register
+    stage:
+      - -opt/amdgpu/lib/x86_64-linux-gnu/libdrm.so.*
+      - -opt/amdgpu/lib/x86_64-linux-gnu/libdrm_amdgpu.so*
+      - -opt/rocm-${SNAPCRAFT_PROJECT_VERSION}/lib/librocm-core.so*
