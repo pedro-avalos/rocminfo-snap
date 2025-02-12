@@ -1,4 +1,4 @@
-# ROCmInfo snap
+# ROCmInfo Snap
 
 [![rocminfo](https://snapcraft.io/rocminfo/badge.svg)](https://snapcraft.io/rocminfo)
 
