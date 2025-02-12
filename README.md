@@ -13,7 +13,7 @@ sudo snap install rocminfo
 
 [![Get it from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/rocminfo)
 
-(![Don't have snapd installed?](https://snapcraft.io/docs/core/install))
+([Don't have snapd installed?](https://snapcraft.io/docs/core/install))
 
 ## Use
 
