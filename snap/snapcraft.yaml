@@ -68,7 +68,7 @@ parts:
     source-tag: rocm-${SNAPCRAFT_PROJECT_VERSION}
     build-snaps: [cmake]
     build-packages:
-      - libhsa-runtime-dev
+      - hsa-rocr-dev
       - rocm-dev
     stage-packages:
       - glib-networking
