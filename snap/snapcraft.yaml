@@ -1,6 +1,6 @@
 name: rocminfo
 license: NCSA
-version: 6.4.4
+version: 7.0.2
 summary: ROCm Application for Reporting System Info
 description: |
   NOTE: This is a wrapper of the official package, but it is not verified,
